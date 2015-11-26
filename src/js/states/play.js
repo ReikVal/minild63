@@ -13,6 +13,8 @@
 
         init: function() {
             this.physics.startSystem(Phaser.Physics.ARCADE);
+
+            this.layerFlag = false;
         },
 
         create: function() {
@@ -31,15 +33,28 @@
             //Creating player
             this.player = this.add.sprite(0, 0, 'player');
             this.physics.enable(this.player);
-            this.player.body.gravity.y = 300;
-            this.player.body.velocity.x = 200;
+            this.player.body.gravity.y = 1000;
+            // this.player.body.velocity.x = 200;
 
             this.game.camera.follow(this.player);
+
+            //Adding keyboard
+            this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
+            this.layerKey.onDown.add(function() {
+                this.layerFlag = !this.layerFlag;
+                this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function() {
+                    //TODO: Kill the player
+                    console.log("YOU ARE DEATH");
+                }, this);
+            }, this);
         },
 
         update: function() {
-            this.physics.arcade.collide(this.player, this.whiteLayer);
-            this.physics.arcade.collide(this.player, this.blackLayer);
+            if(this.layerFlag) {
+                this.physics.arcade.collide(this.player, this.whiteLayer);
+            } else {
+                this.physics.arcade.collide(this.player, this.blackLayer);
+            }
         }
     };
 
