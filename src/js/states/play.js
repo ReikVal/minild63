@@ -13,6 +13,10 @@
         },
 
         init: function() {
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+
             this.physics.startSystem(Phaser.Physics.ARCADE);
 
             this.layerFlag = false;
