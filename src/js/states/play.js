@@ -68,6 +68,10 @@
                 //TODO: Do a better restart
                 this.game.state.restart();
             }
+
+            if(this.player.y >= 420) {
+                this.game.state.restart();
+            }
         },
 
         render: function() {
