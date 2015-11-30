@@ -65,7 +65,8 @@
 
             //Checking right collision
             if(this.player.body.blocked.right) {
-                console.log("YOU ARE DEATH");
+                //TODO: Do a better restart
+                this.game.state.restart();
             }
         },
 
@@ -77,9 +78,9 @@
             this.layerFlag = !this.layerFlag;
             this.player.frame = this.layerFlag?1:0;
             this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
-                //TODO: Kill the player
                 if(tile.index != -1) {
-                    console.log("YOU ARE DEATH");
+                    //TODO: Do a better restart
+                    this.game.state.restart();
                 }
             }, this);
         },
