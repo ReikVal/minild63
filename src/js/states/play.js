@@ -8,7 +8,7 @@
             this.load.tilemap('level1', 'json/level1.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.image('world', 'images/world.png');
 
-            this.load.image('player', 'images/player.png');
+            this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
         },
 
         init: function() {
@@ -34,7 +34,7 @@
             this.player = this.add.sprite(0, 0, 'player');
             this.physics.enable(this.player);
             this.player.body.gravity.y = 1000;
-            // this.player.body.velocity.x = 200;
+            this.player.body.velocity.x = 200;
 
             this.game.camera.follow(this.player);
 
@@ -42,10 +42,19 @@
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
             this.layerKey.onDown.add(function() {
                 this.layerFlag = !this.layerFlag;
-                this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function() {
+                this.player.frame = this.layerFlag?1:0;
+                this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
                     //TODO: Kill the player
-                    console.log("YOU ARE DEATH");
+                    if(tile.index != -1) {
+                        console.log("YOU ARE DEATH");
+                    }
                 }, this);
+            }, this);
+            this.jumpKey = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
+            this.jumpKey.onDown.add(function() {
+                if(this.player.body.blocked.down) {
+                    this.player.body.velocity.y = -300;
+                }
             }, this);
         },
 
@@ -55,6 +64,10 @@
             } else {
                 this.physics.arcade.collide(this.player, this.blackLayer);
             }
+        },
+
+        render: function() {
+            //this.game.debug.body(this.player);
         }
     };
 
