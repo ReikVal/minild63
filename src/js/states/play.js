@@ -42,6 +42,7 @@
             this.player.body.velocity.x = 200;
 
             this.game.camera.follow(this.player);
+            this.game.camera.deadzone = new Phaser.Rectangle(0, 0, 100, 432);
 
             //Adding keyboard
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
