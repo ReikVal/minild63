@@ -64,6 +64,11 @@
             } else {
                 this.physics.arcade.collide(this.player, this.blackLayer);
             }
+
+            //Checking right collision
+            if(this.player.body.blocked.right) {
+                console.log("YOU ARE DEATH");
+            }
         },
 
         render: function() {
