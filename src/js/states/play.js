@@ -7,6 +7,7 @@
         preload: function() {
             this.load.tilemap('level1', 'json/level1.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.image('world', 'images/world.png');
+            this.load.image('button', 'images/button.png');
 
             this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
         },
@@ -40,22 +41,14 @@
 
             //Adding keyboard
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
-            this.layerKey.onDown.add(function() {
-                this.layerFlag = !this.layerFlag;
-                this.player.frame = this.layerFlag?1:0;
-                this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
-                    //TODO: Kill the player
-                    if(tile.index != -1) {
-                        console.log("YOU ARE DEATH");
-                    }
-                }, this);
-            }, this);
+            this.layerKey.onDown.add(this.changeLayer, this);
             this.jumpKey = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
-            this.jumpKey.onDown.add(function() {
-                if(this.player.body.blocked.down) {
-                    this.player.body.velocity.y = -300;
-                }
-            }, this);
+            this.jumpKey.onDown.add(this.jump, this);
+            //Adding buttons
+            this.layerButton = this.game.add.button(0, 0, 'button', this.changeLayer, this);
+            this.layerButton.fixedToCamera = true;
+            this.jumpButton = this.game.add.button(384, 0, 'button', this.jump, this);
+            this.jumpButton.fixedToCamera = true;
         },
 
         update: function() {
@@ -73,6 +66,23 @@
 
         render: function() {
             //this.game.debug.body(this.player);
+        },
+
+        changeLayer: function() {
+            this.layerFlag = !this.layerFlag;
+            this.player.frame = this.layerFlag?1:0;
+            this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
+                //TODO: Kill the player
+                if(tile.index != -1) {
+                    console.log("YOU ARE DEATH");
+                }
+            }, this);
+        },
+
+        jump: function() {
+            if(this.player.body.blocked.down) {
+                this.player.body.velocity.y = -300;
+            }
         }
     };
 
