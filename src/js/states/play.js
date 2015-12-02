@@ -50,9 +50,11 @@
             this.jumpKey = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
             this.jumpKey.onDown.add(this.jump, this);
             //Adding buttons
-            this.layerButton = this.game.add.button(0, 0, 'button', this.changeLayer, this);
+            this.layerButton = this.game.add.button(0, 0, 'button');
+            this.layerButton.onInputDown.add(this.changeLayer, this);
             this.layerButton.fixedToCamera = true;
-            this.jumpButton = this.game.add.button(384, 0, 'button', this.jump, this);
+            this.jumpButton = this.game.add.button(384, 0, 'button');
+            this.jumpButton.onInputDown.add(this.jump, this);
             this.jumpButton.fixedToCamera = true;
         },
 
