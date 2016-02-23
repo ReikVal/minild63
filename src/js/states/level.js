@@ -70,19 +70,20 @@
             }
             //Checking right collision
             if(this.player.body.blocked.right) {
-                //TODO: Do a better restart
-                this.game.state.restart(true, false, this.level);
+                this.restart();
             }
 
             if(this.player.y >= this.world.height - this.player.height/2) {
-                //TODO: Do a better restart
-                this.game.state.restart(true, false, this.level);
+                this.restart();
             }
 
             //Checking end of level
             if(this.player.x >= this.game.world.width - 96) {
-                //TODO: Do a better level win
-                this.game.state.restart(true, false, this.level);
+                //Saving data
+                if(exports.localStorage) {
+                    exports.localStorage.setItem(this.level, 100);
+                }
+                this.game.state.start('menu');
             }
         },
 
@@ -95,10 +96,20 @@
             this.player.frame = this.layerFlag?1:0;
             this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
                 if(tile.index != -1) {
-                    //TODO: Do a better restart
-                    this.game.state.restart(true, false, this.level);
+                    this.restart();
                 }
             }, this);
+        },
+
+        restart: function() {
+            var progress = parseInt(100*this.player.x/this.game.world.width);
+            //Saving Progress
+            if(exports.localStorage) {
+                if(!exports.localStorage.getItem(this.level) || exports.localStorage.getItem(this.level) < progress) {
+                    exports.localStorage.setItem(this.level, progress);
+                }
+            }
+            this.game.state.restart(true, false, this.level);
         }
     };
 

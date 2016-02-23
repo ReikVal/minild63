@@ -21,6 +21,12 @@
 
         create: function() {
             this.game.state.start('play', true, false, 'level1');
+        },
+
+        deleteSave: function() {
+            if(exports.localStorage) {
+                exports.localStorage.clear();
+            }
         }
     };
 
