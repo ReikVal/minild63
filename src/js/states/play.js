@@ -48,13 +48,20 @@
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
             this.layerKey.onDown.add(this.changeLayer, this);
             this.jumpKey = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
-            this.jumpKey.onDown.add(this.jump, this);
             //Adding buttons
             this.layerButton = this.game.add.button(0, 0, 'button');
             this.layerButton.onInputDown.add(this.changeLayer, this);
             this.layerButton.fixedToCamera = true;
             this.jumpButton = this.game.add.button(384, 0, 'button');
-            this.jumpButton.onInputDown.add(this.jump, this);
+            this.jumpButton.onInputDown.add(function() {
+                this.player.mustJump = true;
+            }, this);
+            this.jumpButton.onInputUp.add(function() {
+                this.player.mustJump = false;
+            }, this);
+            this.jumpButton.onInputOut.add(function() {
+                this.player.mustJump = false;
+            }, this);
             this.jumpButton.fixedToCamera = true;
         },
 
@@ -65,6 +72,10 @@
                 this.physics.arcade.collide(this.player, this.blackLayer);
             }
 
+            //Jump logic
+            if((this.jumpKey.isDown || this.player.mustJump) && this.player.body.blocked.down) {
+                this.player.body.velocity.y = -300;
+            }
             //Checking right collision
             if(this.player.body.blocked.right) {
                 //TODO: Do a better restart
@@ -89,12 +100,6 @@
                     this.game.state.restart();
                 }
             }, this);
-        },
-
-        jump: function() {
-            if(this.player.body.blocked.down) {
-                this.player.body.velocity.y = -300;
-            }
         }
     };
 
