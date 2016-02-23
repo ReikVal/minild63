@@ -4,29 +4,21 @@
     var BWRUN = exports.BWRUN || {};
 
     BWRUN.PlayState = {
-        preload: function() {
-            this.load.tilemap('level1', 'json/level1.json', null, Phaser.Tilemap.TILED_JSON);
-            this.load.image('world', 'images/world.png');
-            this.load.image('button', 'images/button.png');
+        init: function(level) {
+            this.layerFlag = false;
 
-            this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
+            this.level = level;
         },
 
-        init: function() {
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            this.scale.pageAlignHorizontally = true;
-            this.scale.pageAlignVertically = true;
-
-            this.physics.startSystem(Phaser.Physics.ARCADE);
-
-            this.layerFlag = false;
+        preload: function() {
+            this.load.tilemap(this.level, 'json/' + this.level + '.json', null, Phaser.Tilemap.TILED_JSON);
         },
 
         create: function() {
             //Background
             this.game.stage.backgroundColor = '#787878';
             //Creating map
-            this.map = this.add.tilemap('level1');
+            this.map = this.add.tilemap(this.level);
             this.map.addTilesetImage('world', 'world');
             this.blackLayer = this.map.createLayer('black');
             this.blackLayer.resizeWorld();
@@ -79,11 +71,18 @@
             //Checking right collision
             if(this.player.body.blocked.right) {
                 //TODO: Do a better restart
-                this.game.state.restart();
+                this.game.state.restart(true, false, this.level);
             }
 
-            if(this.player.y >= 420) {
-                this.game.state.restart();
+            if(this.player.y >= this.world.height - this.player.height/2) {
+                //TODO: Do a better restart
+                this.game.state.restart(true, false, this.level);
+            }
+
+            //Checking end of level
+            if(this.player.x >= this.game.world.width - 96) {
+                //TODO: Do a better level win
+                this.game.state.restart(true, false, this.level);
             }
         },
 
@@ -97,7 +96,7 @@
             this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
                 if(tile.index != -1) {
                     //TODO: Do a better restart
-                    this.game.state.restart();
+                    this.game.state.restart(true, false, this.level);
                 }
             }, this);
         }
