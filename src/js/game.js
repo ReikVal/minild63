@@ -8,5 +8,5 @@
     game.state.add('play', BWRUN.PlayState);
     game.state.add('menu', BWRUN.MenuState);
 
-    game.state.start('menu', true, false, 'level1');
+    game.state.start('menu');
 }(window));

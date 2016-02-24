@@ -17,6 +17,13 @@
         create: function() {
             //Background
             this.game.stage.backgroundColor = '#787878';
+            this.bg1 = this.game.add.tileSprite(0, 0, 1152, 432, 'bg1');
+            this.bg1.fixedToCamera = true;
+            this.bg1.sendToBack();
+            this.bg2 = this.game.add.tileSprite(0, 0, 1152, 432, 'bg2');
+            this.bg2.fixedToCamera = true;
+            this.bg2.sendToBack();
+            this.cameraLastPositionX = 0;
             //Creating map
             this.map = this.add.tilemap(this.level);
             this.map.addTilesetImage('world', 'world');
@@ -85,6 +92,11 @@
                 }
                 this.game.state.start('menu');
             }
+
+            //Background
+            this.bg1.autoScroll((this.cameraLastPositionX - this.camera.position.x)*30, 0);
+            this.bg2.autoScroll((this.cameraLastPositionX - this.camera.position.x)*15, 0);
+            this.cameraLastPositionX = this.camera.position.x;
         },
 
         render: function() {

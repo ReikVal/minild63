@@ -15,6 +15,8 @@
         preload: function() {
             this.load.image('world', 'images/world.png');
             this.load.image('button', 'images/button.png');
+            this.load.image('bg1', 'images/bg1.png');
+            this.load.image('bg2', 'images/bg2.png');
 
             this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
         },
