@@ -23,6 +23,9 @@
             this.bg2 = this.game.add.tileSprite(0, 0, 1152, 432, 'bg2');
             this.bg2.fixedToCamera = true;
             this.bg2.sendToBack();
+            this.bg = this.game.add.tileSprite(0, 0, 768, 432, 'bg');
+            this.bg.fixedToCamera = true;
+            this.bg.sendToBack();
             this.cameraLastPositionX = 0;
             //Creating map
             this.map = this.add.tilemap(this.level);
@@ -96,6 +99,7 @@
             //Background
             this.bg1.autoScroll((this.cameraLastPositionX - this.camera.position.x)*30, 0);
             this.bg2.autoScroll((this.cameraLastPositionX - this.camera.position.x)*15, 0);
+            this.bg.autoScroll((this.cameraLastPositionX - this.camera.position.x)*8, 0);
             this.cameraLastPositionX = this.camera.position.x;
         },
 

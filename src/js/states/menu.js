@@ -5,7 +5,7 @@
 
     BWRUN.MenuState = {
         init: function() {
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
 
@@ -15,6 +15,7 @@
         preload: function() {
             this.load.image('world', 'images/world.png');
             this.load.image('button', 'images/button.png');
+            this.load.image('bg', 'images/bg.png');
             this.load.image('bg1', 'images/bg1.png');
             this.load.image('bg2', 'images/bg2.png');
 
@@ -22,6 +23,7 @@
         },
 
         create: function() {
+            this.game.stage.backgroundColor = '#787878';
             this.game.state.start('play', true, false, 'level1');
         },
 
