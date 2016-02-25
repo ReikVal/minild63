@@ -14,6 +14,7 @@ gulp.task('scripts', function() {
     gulp.src(config.files.scripts)
         .pipe($.plumber())
         .pipe($.concat(config.scripts.outFile))
+        .pipe($.uglify())
         .pipe(gulp.dest(config.scripts.destFolder))
         .pipe($.connect.reload());
 });
