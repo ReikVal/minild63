@@ -16,7 +16,8 @@ module.exports = {
         ],
         html: `${sourceFolder}/*.html`,
         images: `${sourceFolder}/images/*.*`,
-        json: `${sourceFolder}/json/*.*`
+        json: `${sourceFolder}/json/*.*`,
+        fonts: `${sourceFolder}/fonts/*.*`
     },
     libs: {
         destFolder: `${destFolder}/js`,
@@ -31,6 +32,9 @@ module.exports = {
     },
     json: {
         destFolder: `${destFolder}/json`
+    },
+    fonts: {
+        destFolder: `${destFolder}/fonts`
     },
     server: {
         root: destFolder,
