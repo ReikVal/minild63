@@ -28,8 +28,8 @@
             button.anchor.setTo(0.5);
             button.inputEnabled = true;
             button.events.onInputDown.add(function() {
-                menu.game.state.start('play', true, false, level);
-            });
+                this.game.state.start('play', true, false, level);
+            }, this);
             buttonText = button.addChild(this.game.make.bitmapText(0, 0, 'carrier_command', n, 18));
             buttonText.anchor.setTo(0.5);
             if(exports.localStorage) {
