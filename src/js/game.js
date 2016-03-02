@@ -7,6 +7,7 @@
 
     game.state.add('play', BWRUN.PlayState);
     game.state.add('menu', BWRUN.MenuState);
+    game.state.add('tutorial', BWRUN.TutorialState);
     game.state.add('preload', BWRUN.PreloadState);
     game.state.add('load', BWRUN.LoadState);
 
