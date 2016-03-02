@@ -44,6 +44,10 @@
             //Camera
             this.game.camera.follow(this.player);
             this.game.camera.deadzone = new Phaser.Rectangle(0, 0, 100, 432);
+            //Shaking
+            this.shaking = false;
+            this.shakingFactor = 1;
+            this.nShaking = 26;
             //Particles
             this.emitter = this.game.add.emitter(0, 0);
             this.emitter.makeParticles('particles', [0, 1]);
@@ -110,7 +114,14 @@
                     this.winTimer.start();
                 }
             }
-
+            //Shaking
+            if(this.shaking && this.nShaking > 0) {
+                this.nShaking--;
+                if(this.nShaking % 2 === 0) {
+                    this.shakingFactor *= -1;
+                    this.camera.x += 3*this.shakingFactor;
+                }
+            }
             //Background
             this.bg1.autoScroll((this.cameraLastPositionX - this.camera.position.x)*30, 0);
             this.bg2.autoScroll((this.cameraLastPositionX - this.camera.position.x)*15, 0);
@@ -151,6 +162,7 @@
                 this.game.state.restart(true, false, this.level);
             }, this);
             this.restartTimer.start();
+            this.shaking = true;
         }
     };
 
