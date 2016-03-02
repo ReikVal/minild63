@@ -12,6 +12,22 @@
             this.bg = this.game.add.tileSprite(0, 0, 768, 432, 'bg');
             this.bg.sendToBack();
             //Generting buttons
+            this.levelText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 50   , 'carrier_command', 'LEVELS:', 18);
+            this.levelText.anchor.setTo(0.5);
+            this.levelText.tint = 0x000000;
+            if(exports.localStorage) {
+                var deleteButtonGraphic = this.game.make.graphics(0, 0);
+                deleteButtonGraphic.beginFill(0x111111, 1);
+                deleteButtonGraphic.drawRect(0, 0, 180, 25);
+                deleteButtonGraphic.beginFill(0x2d2d2d, 1);
+                deleteButtonGraphic.drawRect(7, 7, 166, 11);
+                deleteButtonGraphic.endFill();
+                this.deleteButton = this.game.add.button(this.world.centerX, this.world.centerY + 170, deleteButtonGraphic.generateTexture(), this.deleteSave);
+                this.deleteButton.anchor.setTo(0.5);
+                this.deleteText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 170   , 'carrier_command', 'Delete progress', 8);
+                this.deleteText.anchor.setTo(0.5);
+
+            }
             createLevelPick(this, '1', - 75);
             createLevelPick(this, '2', 0);
             createLevelPick(this, '3', 75);
@@ -25,6 +41,7 @@
         deleteSave: function() {
             if(exports.localStorage) {
                 exports.localStorage.clear();
+                this.game.state.restart();
             }
         }
     };
@@ -34,8 +51,10 @@
             progressRect = context.make.graphics(0, 0),
             level        = 'level' + n;
         var button, buttonText, progressBar, progressText, progress;
-        rect.beginFill(0x000000, 1);
+        rect.beginFill(0x111111, 1);
         rect.drawRect(0, 0, 50, 50);
+        rect.beginFill(0x2d2d2d, 1);
+        rect.drawRect(7, 7, 36, 36);
         rect.endFill();
         progressRect.beginFill(0xffd60a, 1);
         progressRect.drawRect(0, 0, 1, 14);
