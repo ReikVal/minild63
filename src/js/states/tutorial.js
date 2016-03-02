@@ -19,9 +19,9 @@
             this.layer = this.map.createLayer('bw');
             this.map.setCollisionByIndex(1);
             //Creating tutorial text
-            this.tip1 = this.game.add.bitmapText(10, 10, 'carrier_command', 'You can only interact\n\nwith platforms of your current colour', 8);
+            this.tip1 = this.game.add.bitmapText(10, 10, 'carrier_command', 'You can only interact\n\nwith platforms of your opposite colour', 8);
             this.tip2 = this.game.add.bitmapText(10, 202, 'carrier_command', 'You can jump pressing\n\nX key or right side of the screen', 8);
-            this.tip3 = this.game.add.bitmapText(426, 10, 'carrier_command', 'You die if you hit a wall\n\nof your current colour', 8);
+            this.tip3 = this.game.add.bitmapText(426, 10, 'carrier_command', 'You die if you hit a wall\n\nof your opposite colour', 8);
             this.tip4 = this.game.add.bitmapText(426, 202, 'carrier_command', 'You can change your colour pressing\n\nZ key or left side of the screen', 8);
 
             //Creating players
@@ -31,10 +31,12 @@
             this.player3 = this.players.create(416, 64, 'player');
             this.players.addAll('body.gravity.y', 1000);
             this.players.addAll('body.velocity.x', 200);
+            this.players.addAll('frame', 1);
             this.player4 = this.game.add.sprite(416, 256, 'player');
             this.physics.enable(this.player4);
             this.player4.body.gravity.y = 1000;
             this.player4.body.velocity.x = 200;
+            this.player4.frame = 1;
 
             //Back to menu
             this.menuButton = this.game.add.button(0, this.world.height - 50, 'tutorialButton', function() {
@@ -63,12 +65,12 @@
                 this.player4.x = 416;
                 this.player4.y = 256;
                 this.player4.body.velocity.y = 0;
-                this.player4.frame = 0;
+                this.player4.frame = 1;
             }
             if(this.player4.x < 540) {
                 this.physics.arcade.collide(this.player4, this.layer);
             } else {
-                this.player4.frame = 1;
+                this.player4.frame = 0;
             }
         }
     };
