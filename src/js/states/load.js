@@ -19,6 +19,7 @@
                 this.load.image('world', 'images/world.png');
                 this.load.image('button', 'images/button.png');
                 this.load.image('twitterLogo', 'images/twitter_logo_white_32.png');
+                this.load.image('tutorialButton', 'images/tutorialButton.png');
                 this.load.image('bg', 'images/bg.png');
                 this.load.image('bg1', 'images/bg1.png');
                 this.load.image('bg2', 'images/bg2.png');

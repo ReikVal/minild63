@@ -28,6 +28,11 @@
                 this.deleteText.anchor.setTo(0.5);
 
             }
+            this.tutorialButton = this.game.add.button(0, this.world.height - 50, 'tutorialButton', function() {
+                this.game.state.start('tutorial');
+            }, this);
+            this.tutorialText = this.game.add.bitmapText(45, this.world.height - 55, 'carrier_command', 'tutorial', 12);
+            this.tutorialText.tint = 0x000000;
             createLevelPick(this, '1', - 75);
             createLevelPick(this, '2', 0);
             createLevelPick(this, '3', 75);
