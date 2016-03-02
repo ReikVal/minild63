@@ -10,6 +10,7 @@
         },
 
         preload: function() {
+            this.game.stage.backgroundColor = '#000000';
             this.loadingText = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY, 'carrier_command', "Loading...", 18);
             this.loadingText.anchor.setTo(0.5);
 

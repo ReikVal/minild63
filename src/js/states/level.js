@@ -47,7 +47,6 @@
             //Particles
             this.emitter = this.game.add.emitter(0, 0);
             this.emitter.makeParticles('particles', [0, 1]);
-            this.emitter.gravity = 200;
             //Adding keyboard
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
             this.layerKey.onDown.add(this.changeLayer, this);
@@ -95,7 +94,21 @@
                 if(exports.localStorage) {
                     exports.localStorage.setItem(this.level, 100);
                 }
-                this.game.state.start('menu');
+                if(this.player.alive) {
+                    this.emitter.height = this.world.height;
+                    this.emitter.x = this.world.width;
+                    this.emitter.y = this.world.centerY;
+                    this.emitter.maxParticleScale = 5;
+                    this.emitter.setYSpeed(-2, 2);
+                    this.emitter.setXSpeed(-500, -300);
+                    this.emitter.start(false, 2000, 5, 50);
+                    this.player.kill();
+                    this.winTimer = this.game.time.create(true);
+                    this.winTimer.add(3 * Phaser.Timer.SECOND, function() {
+                        this.game.state.start('menu');
+                    }, this);
+                    this.winTimer.start();
+                }
             }
 
             //Background
@@ -130,6 +143,7 @@
             //Doing the player explosion
             this.emitter.x = this.player.x;
             this.emitter.y = this.player.y;
+            this.emitter.gravity = 200;
             this.player.kill();
             this.emitter.start(true, 0, null, 50);
             this.restartTimer = this.game.time.create(true);
