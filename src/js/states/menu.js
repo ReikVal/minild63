@@ -7,6 +7,7 @@
         create: function() {
             // Reseting the world width because the world is not always 768 width
             this.world.width = 768;
+            this.world.height = 432;
             //Background
             this.game.stage.backgroundColor = '#787878';
             this.bg = this.game.add.tileSprite(0, 0, 768, 432, 'bg');
