@@ -36,16 +36,18 @@
             //Setting collisions
             this.map.setCollisionByIndex(1, true, this.whiteLayer.index);
             this.map.setCollisionByIndex(2, true, this.blackLayer.index);
-
             //Creating player
             this.player = this.add.sprite(0, 0, 'player');
             this.physics.enable(this.player);
             this.player.body.gravity.y = 1000;
             this.player.body.velocity.x = 200;
-
+            //Camera
             this.game.camera.follow(this.player);
             this.game.camera.deadzone = new Phaser.Rectangle(0, 0, 100, 432);
-
+            //Particles
+            this.emitter = this.game.add.emitter(0, 0);
+            this.emitter.makeParticles('particles', [0, 1]);
+            this.emitter.gravity = 200;
             //Adding keyboard
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
             this.layerKey.onDown.add(this.changeLayer, this);
@@ -83,7 +85,7 @@
                 this.restart();
             }
 
-            if(this.player.y >= this.world.height - this.player.height/2) {
+            if(this.player.y >= this.world.height) {
                 this.restart();
             }
 
@@ -125,7 +127,16 @@
                     exports.localStorage.setItem(this.level, progress);
                 }
             }
-            this.game.state.restart(true, false, this.level);
+            //Doing the player explosion
+            this.emitter.x = this.player.x;
+            this.emitter.y = this.player.y;
+            this.player.kill();
+            this.emitter.start(true, 0, null, 50);
+            this.restartTimer = this.game.time.create(true);
+            this.restartTimer.add(2 * Phaser.Timer.SECOND, function() {
+                this.game.state.restart(true, false, this.level);
+            }, this);
+            this.restartTimer.start();
         }
     };
 

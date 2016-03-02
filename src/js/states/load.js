@@ -23,6 +23,7 @@
                 this.load.image('bg', 'images/bg.png');
                 this.load.image('bg1', 'images/bg1.png');
                 this.load.image('bg2', 'images/bg2.png');
+                this.load.image('particles', 'images/particles.png');
 
                 this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
             }
