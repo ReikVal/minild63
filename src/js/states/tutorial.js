@@ -23,7 +23,10 @@
             this.tip2 = this.game.add.bitmapText(10, 202, 'carrier_command', 'You can jump pressing\n\nX key or right side of the screen', 8);
             this.tip3 = this.game.add.bitmapText(426, 10, 'carrier_command', 'You die if you hit a wall\n\nof your opposite colour', 8);
             this.tip4 = this.game.add.bitmapText(426, 202, 'carrier_command', 'You can change your colour pressing\n\nZ key or left side of the screen', 8);
-
+            //Create emitter
+            this.emitter = this.game.add.emitter(0, 0, 2000);
+            this.emitter.makeParticles('particles', [0, 1]);
+            this.emitter.gravity = 200;
             //Creating players
             this.players = this.game.add.physicsGroup(Phaser.Physics.ARCADE);
             this.player1 = this.players.create(0, 64, 'player');
@@ -52,6 +55,9 @@
                 this.player2.body.velocity.y = -300;
             }
             if(this.player3.body.blocked.right) {
+                this.emitter.x = this.player3.x;
+                this.emitter.y = this.player3.y;
+                this.emitter.start(true, 0, null, 10);
                 this.player1.x = 0;
                 this.player1.y = 64;
                 this.player1.body.velocity.y = 0;
