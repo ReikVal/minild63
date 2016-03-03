@@ -33,6 +33,13 @@ gulp.task('json', function() {
         .pipe($.connect.reload());
 });
 
+gulp.task('sounds', function() {
+    gulp.src(config.files.sounds)
+        .pipe($.plumber())
+        .pipe(gulp.dest(config.sounds.destFolder))
+        .pipe($.connect.reload());
+});
+
 gulp.task('fonts', function() {
     gulp.src(config.files.fonts)
         .pipe($.plumber())
@@ -54,7 +61,7 @@ gulp.task('watch', function() {
     gulp.watch(config.files.html, ['html']);
 });
 
-gulp.task('build', ['scripts', 'libs', 'images', 'json', 'fonts', 'html']);
+gulp.task('build', ['scripts', 'libs', 'images', 'json', 'sounds', 'fonts', 'html']);
 
 gulp.task('dev', ['watch', 'server']);
 

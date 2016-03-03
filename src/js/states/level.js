@@ -10,10 +10,6 @@
             this.level = level;
         },
 
-        preload: function() {
-            this.load.tilemap(this.level, 'json/' + this.level + '.json', null, Phaser.Tilemap.TILED_JSON);
-        },
-
         create: function() {
             //Background
             this.game.stage.backgroundColor = '#787878';
@@ -51,6 +47,15 @@
             //Particles
             this.emitter = this.game.add.emitter(0, 0);
             this.emitter.makeParticles('particles', [0, 1]);
+            //Adding sounds
+            this.explosionFx = this.game.add.audio('explosion');
+            this.explosionFx.volume = 0.1;
+            this.changeFx = this.game.add.audio('change');
+            this.changeFx.volume = 0.1;
+            this.bgMusic = this.game.add.audio(this.level + 'Sound');
+            this.bgMusic.volume = 0.1;
+            this.bgMusic.loop = true;
+            this.bgMusic.play();
             //Adding keyboard
             this.layerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
             this.layerKey.onDown.add(this.changeLayer, this);
@@ -84,11 +89,11 @@
                 this.player.body.velocity.y = -300;
             }
             //Checking right collision
-            if(this.player.body.blocked.right) {
+            if(this.player.body.blocked.right && this.player.alive) {
                 this.restart();
             }
 
-            if(this.player.y >= this.world.height) {
+            if(this.player.y >= this.world.height && this.player.alive) {
                 this.restart();
             }
 
@@ -136,6 +141,9 @@
         changeLayer: function() {
             this.layerFlag = !this.layerFlag;
             this.player.frame = this.layerFlag?1:0;
+            if(this.player.alive) {
+                this.changeFx.play();
+            }
             this.physics.arcade.collide(this.player, this.layerFlag?this.whiteLayer:this.blackLayer, null, function(player, tile) {
                 if(tile.index != -1) {
                     this.restart();
@@ -145,6 +153,7 @@
 
         restart: function() {
             var progress = parseInt(100*this.player.x/this.game.world.width);
+            this.player.kill();
             //Saving Progress
             if(exports.localStorage) {
                 if(!exports.localStorage.getItem(this.level) || exports.localStorage.getItem(this.level) < progress) {
@@ -155,7 +164,9 @@
             this.emitter.x = this.player.x;
             this.emitter.y = this.player.y;
             this.emitter.gravity = 200;
-            this.player.kill();
+            //sounds
+            this.bgMusic.stop();
+            this.explosionFx.play();
             this.emitter.start(true, 0, null, 50);
             this.restartTimer = this.game.time.create(true);
             this.restartTimer.add(2 * Phaser.Timer.SECOND, function() {

@@ -85,7 +85,7 @@
         progressRect.endFill();
 
         button = context.game.add.button(context.world.centerX + relativeX, context.world.centerY + 100, rect.generateTexture(), function() {
-            context.game.state.start('play', true, false, level);
+            context.game.state.start('load', true, false, level);
         });
         button.anchor.setTo(0.5);
         button.inputEnabled = true;

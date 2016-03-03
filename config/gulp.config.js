@@ -17,6 +17,7 @@ module.exports = {
         html: `${sourceFolder}/*.html`,
         images: `${sourceFolder}/images/*.*`,
         json: `${sourceFolder}/json/*.*`,
+        sounds: `${sourceFolder}/sounds/*.*`,
         fonts: `${sourceFolder}/fonts/*.*`
     },
     libs: {
@@ -32,6 +33,9 @@ module.exports = {
     },
     json: {
         destFolder: `${destFolder}/json`
+    },
+    sounds: {
+        destFolder: `${destFolder}/sounds`
     },
     fonts: {
         destFolder: `${destFolder}/fonts`

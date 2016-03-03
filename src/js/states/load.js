@@ -16,7 +16,9 @@
 
             if(this.level) {
                 this.load.tilemap(this.level, 'json/' + this.level + '.json', null, Phaser.Tilemap.TILED_JSON);
+                this.load.audio(this.level + 'Sound', 'sounds/' + this.level + '.wav');
             } else {
+                //Common Images
                 this.load.image('world', 'images/world.png');
                 this.load.image('button', 'images/button.png');
                 this.load.image('twitterLogo', 'images/twitter_logo_white_32.png');
@@ -28,14 +30,25 @@
                 this.load.image('logo', 'images/logo.png');
 
                 this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
+
+                //Common Audio
+                this.load.audio('explosion', 'sounds/explosion.wav');
+                this.load.audio('change', 'sounds/change.wav');
             }
         },
 
         create: function() {
             if(this.level) {
-                this.game.state.start('play', true, false, this.level);
+                var levelSound = this.game.add.audio(this.level + 'Sound');
+                this.sound.setDecodedCallback([levelSound], function() {
+                    this.game.state.start('play', true, false, this.level);
+                }, this);
             } else {
-                this.game.state.start('menu');
+                var explosion = this.game.add.audio('explosion'),
+                       change = this.game.add.audio('change');
+                this.sound.setDecodedCallback([explosion, change], function() {
+                    this.game.state.start('menu');
+                }, this);
             }
         }
     };
