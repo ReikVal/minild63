@@ -34,6 +34,7 @@
                 //Common Audio
                 this.load.audio('explosion', 'sounds/explosion.wav');
                 this.load.audio('change', 'sounds/change.wav');
+                this.load.audio('win', 'sounds/win.wav');
             }
         },
 
@@ -45,8 +46,9 @@
                 }, this);
             } else {
                 var explosion = this.game.add.audio('explosion'),
-                       change = this.game.add.audio('change');
-                this.sound.setDecodedCallback([explosion, change], function() {
+                    change    = this.game.add.audio('change'),
+                    win       = this.game.add.audio('win');
+                this.sound.setDecodedCallback([explosion, change, win], function() {
                     this.game.state.start('menu');
                 }, this);
             }

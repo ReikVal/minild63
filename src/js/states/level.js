@@ -52,6 +52,8 @@
             this.explosionFx.volume = 0.1;
             this.changeFx = this.game.add.audio('change');
             this.changeFx.volume = 0.1;
+            this.winFx = this.game.add.audio('win');
+            this.winFx.volume = 0.1;
             this.bgMusic = this.game.add.audio(this.level + 'Sound');
             this.bgMusic.volume = 0.1;
             this.bgMusic.loop = true;
@@ -98,26 +100,27 @@
             }
 
             //Checking end of level
-            if(this.player.x >= this.game.world.width - 96) {
+            if(this.player.x >= this.game.world.width - 96 && this.player.alive) {
+                this.player.kill();
                 //Saving data
                 if(exports.localStorage) {
                     exports.localStorage.setItem(this.level, 100);
                 }
-                if(this.player.alive) {
-                    this.emitter.height = this.world.height;
-                    this.emitter.x = this.world.width;
-                    this.emitter.y = this.world.centerY;
-                    this.emitter.maxParticleScale = 5;
-                    this.emitter.setYSpeed(-2, 2);
-                    this.emitter.setXSpeed(-500, -300);
-                    this.emitter.start(false, 2000, 5, 50);
-                    this.player.kill();
-                    this.winTimer = this.game.time.create(true);
-                    this.winTimer.add(3 * Phaser.Timer.SECOND, function() {
-                        this.game.state.start('menu');
-                    }, this);
-                    this.winTimer.start();
-                }
+                this.emitter.height = this.world.height;
+                this.emitter.x = this.world.width;
+                this.emitter.y = this.world.centerY;
+                this.emitter.maxParticleScale = 5;
+                this.emitter.setYSpeed(-2, 2);
+                this.emitter.setXSpeed(-500, -300);
+                this.emitter.start(false, 2000, 5, 50);
+                //Sounds
+                this.winFx.play();
+                this.bgMusic.stop();
+                this.winTimer = this.game.time.create(true);
+                this.winTimer.add(3 * Phaser.Timer.SECOND, function() {
+                    this.game.state.start('menu');
+                }, this);
+                this.winTimer.start();
             }
             //Shaking
             if(this.shaking && this.nShaking > 0) {
