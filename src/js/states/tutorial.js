@@ -57,7 +57,7 @@
             if(this.player3.body.blocked.right) {
                 this.emitter.x = this.player3.x;
                 this.emitter.y = this.player3.y;
-                this.emitter.start(true, 0, null, 10);
+                this.emitter.start(true, 1000, null, 10);
                 this.player1.x = 0;
                 this.player1.y = 64;
                 this.player1.body.velocity.y = 0;
