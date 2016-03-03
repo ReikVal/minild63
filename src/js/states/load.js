@@ -26,9 +26,11 @@
                 this.load.image('bg', 'images/bg.png');
                 this.load.image('bg1', 'images/bg1.png');
                 this.load.image('bg2', 'images/bg2.png');
-                this.load.image('particles', 'images/particles.png');
                 this.load.image('logo', 'images/logo.png');
+                this.load.image('backButton', 'images/backButton.png');
 
+                this.load.spritesheet('particles', 'images/particles.png', 4, 4, 2);
+                this.load.spritesheet('soundButton', 'images/soundButton.png', 32, 32, 2);
                 this.load.spritesheet('player', 'images/player.png', 16, 24, 2);
 
                 //Common Audio

@@ -77,6 +77,20 @@
                 this.player.mustJump = false;
             }, this);
             this.jumpButton.fixedToCamera = true;
+            this.soundButton = this.game.add.button(389, 0, 'soundButton');
+            this.soundButton.frame = this.sound.mute?1:0;
+            this.soundButton.onInputDown.add(function() {
+                this.sound.mute = !this.sound.mute;
+                this.soundButton.frame = this.sound.mute?1:0;
+            }, this);
+            this.soundButton.fixedToCamera = true;
+            this.backButton = this.game.add.button(378, 0, 'backButton');
+            this.backButton.anchor.setTo(1, 0);
+            this.backButton.onInputDown.add(function() {
+                this.bgMusic.stop();
+                this.game.state.start('menu');
+            }, this);
+            this.backButton.fixedToCamera = true;
         },
 
         update: function() {
