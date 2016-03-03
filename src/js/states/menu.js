@@ -12,6 +12,20 @@
             this.game.stage.backgroundColor = '#787878';
             this.bg = this.game.add.tileSprite(0, 0, 768, 432, 'bg');
             this.bg.sendToBack();
+            //Logo
+            this.logo = this.game.add.sprite(this.world.centerX, 0, 'logo');
+            this.logo.anchor.setTo(0.5);
+            this.game.physics.arcade.enable(this.logo);
+            this.logo.body.gravity.y = 100;
+            this.logo.body.bounce.y = 0.3;
+            this.invisibleGraphic = this.game.make.graphics(0, 0);
+            this.invisibleGraphic.beginFill(0x000000, 0);
+            this.invisibleGraphic.drawRect(0, 0, this.logo.width, 4);
+            this.invisibleGraphic.endFill();
+            this.invisibleFloor = this.game.add.sprite(this.world.centerX, this.world.centerY + 20, this.invisibleGraphic.generateTexture());
+            this.invisibleFloor.anchor.setTo(0.5, 0);
+            this.game.physics.arcade.enable(this.invisibleFloor);
+            this.invisibleFloor.body.immovable = true;
             //Generting buttons
             this.levelText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 50   , 'carrier_command', 'LEVELS:', 18);
             this.levelText.anchor.setTo(0.5);
@@ -42,6 +56,10 @@
             this.twitterLogo.anchor.setTo(0.5);
             this.twitterName = this.twitterLogo.addChild(this.game.make.bitmapText(-10, -35, 'carrier_command', 'Made by:\n\n  @ReikVal', 14));
             this.twitterName.tint = 0x000000;
+        },
+
+        update: function() {
+            this.game.physics.arcade.collide(this.logo, this.invisibleFloor);
         },
 
         deleteSave: function() {
