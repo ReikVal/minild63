@@ -17,6 +17,7 @@
             if(this.level) {
                 this.load.tilemap(this.level, 'json/' + this.level + '.json', null, Phaser.Tilemap.TILED_JSON);
                 this.load.audio(this.level + 'Sound', 'sounds/' + this.level + '.wav');
+                // this.load.audio(this.level + 'Sound', 'sounds/level2.wav');
             } else {
                 //Common Images
                 this.load.image('world', 'images/world.png');

@@ -49,13 +49,13 @@
             this.emitter.makeParticles('particles', [0, 1]);
             //Adding sounds
             this.explosionFx = this.game.add.audio('explosion');
-            this.explosionFx.volume = 0.1;
+            this.explosionFx.volume = 0.2;
             this.changeFx = this.game.add.audio('change');
-            this.changeFx.volume = 0.1;
+            this.changeFx.volume = 0.2;
             this.winFx = this.game.add.audio('win');
-            this.winFx.volume = 0.1;
+            this.winFx.volume = 0.2;
             this.bgMusic = this.game.add.audio(this.level + 'Sound');
-            this.bgMusic.volume = 0.1;
+            this.bgMusic.volume = 0.2;
             this.bgMusic.loop = true;
             this.bgMusic.play();
             //Adding keyboard
