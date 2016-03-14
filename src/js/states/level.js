@@ -8,6 +8,9 @@
             this.layerFlag = false;
 
             this.level = level;
+
+            //Attemp
+            this.attemp = 0;
         },
 
         create: function() {
@@ -91,6 +94,9 @@
                 this.game.state.start('menu');
             }, this);
             this.backButton.fixedToCamera = true;
+            //Attemp
+            this.attempText = this.game.add.bitmapText(200, 100, 'carrier_command', 'ATTEMP: ' + BWRUN.attemp++, 24);
+            this.attempText.anchor.setTo(0.5);
         },
 
         update: function() {
